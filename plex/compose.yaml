@@ -1,0 +1,31 @@
+---
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM-} #optional
+    volumes:
+      - ./config:/config
+      - library:/media/library
+    restart: unless-stopped
+    pull_policy: always
+    tmpfs:
+      - /tmp:mode=755,uid=${PUID:-1000},gid=${PGID:-1000}
+    devices:
+      - "/dev/dri:/dev/dri"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    healthcheck:
+      test: curl -sSf http://localhost:32400/identity || exit 1
+      interval: 120s
+      timeout: 60s
+      retries: 3
+      start_period: 60s
+      start_interval: 5s

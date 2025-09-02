@@ -1,0 +1,30 @@
+---
+name: rpiplex
+
+include:
+  - plex/compose.yaml
+
+volumes:
+  downloads:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/downloads
+
+  watch:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/watch
+
+  library:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/library
+
+networks:
+  default:
