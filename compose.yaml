@@ -3,6 +3,7 @@ name: rpiplex
 
 include:
   - plex/compose.yaml
+  - code-server/compose.yaml
 
 volumes:
   downloads:

@@ -1,0 +1,18 @@
+---
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Etc/UTC}
+      - DEFAULT_WORKSPACE=/workspace
+      - SUDO_PASSWORD=${CODER_SUDO_PASSWORD}
+      - PWA_APPNAME=rpiplex
+    volumes:
+      - ./config:/config
+      - ..:/workspace
+    ports:
+      - 8443:8443
+    restart: unless-stopped
